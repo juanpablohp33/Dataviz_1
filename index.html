@@ -1,14 +1,14 @@
-<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Put a nice title here!</title>
+    <title>PRACTICA 1</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">		
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -16,19 +16,22 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
   </head>
+ 
   <body>
 	<div class="container-fluid">
 		<div class="row">
 		
 			<div class="col-md-8 col-md-offset-3">
-			<h1 id="title">Amazing title!</h1>
+			<h1 id="title">GRAFICO  1</h1>
 			</div>
 			
 			<div class="col-md-8 col-md-offset-2">
         <p>
           Some amazing content!
         </p>
+        
 			</div>
       
 		</div>
@@ -36,6 +39,37 @@
 	
 	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- d3-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.0.0/d3.js"></script>
+    <script src=src="//d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.js"></script>
+    <script>
+      
+      d3.json('multiBarHorizontalData.json', function(data) {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarHorizontalChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .margin({top: 30, right: 20, bottom: 50, left: 175})
+        .showValues(true)           //Show bar value next to each bar.
+        .tooltips(true)             //Show tooltips on hover.
+        .transitionDuration(350)
+        .showControls(true);        //Allow user to switch between "Grouped" and "Stacked" mode.
+
+    chart.yAxis
+        .tickFormat(d3.format(',.2f'));
+
+    d3.select('#chart1 svg')
+        .datum(data)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+});
+}
+    </script>
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
